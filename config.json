@@ -1,0 +1,16 @@
+{
+    "port": 3000,
+    "ssl": false,
+
+    "user": "username",
+    "pass": "changeme",
+
+    "subscribe": [
+        "kv_topic"
+    ],
+    "publish": [
+        "kv_topic"
+    ],
+
+    "keepalive": 10
+}
