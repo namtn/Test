@@ -1,7 +1,7 @@
 {
     "port": 3000,
     "ssl": false,
-
+    "host": "192.168.1.57",
     "user": "username",
     "pass": "changeme",
 
