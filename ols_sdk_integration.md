@@ -162,7 +162,7 @@ Build the project using `⌘B`
 * Run command: `./gradlew flutter:assembleDebug`
 
 This results in a `flutter-debug.aar` archive file in `.android/Flutter/build/outputs/aar/.`
-### <a name="fenced-code-block"> Android Bank app configuration </a>
+### <a name="fenced-code-block"> Android Bank app's configuration </a>
 
 Declares source compatibility within `app's build.gradle`:
 
@@ -195,7 +195,7 @@ dependencies {
 }
 ~~~~
 
-### <a name="fenced-code-block"> Use the loyalty module from android app code </a>
+### <a name="fenced-code-block"> Open Loyalty view from android Bank app's code </a>
 
 Create a button and handle click event:
 
