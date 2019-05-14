@@ -1,9 +1,9 @@
-## Project location
+### Project location
 * OLS SDK: `/somepath/ols-sdk`
-* iOs project: `/somepath/iOSBankApp`
-* Android project: `/somepath/android-bank-app`
+* iOS project: `/somepath/iOSBankApp`
+* Android project: `/somepath/AndroidBankApp`
 
-## Prerequisite
+### Prerequisite
 `Flutter` for both iOS & Android
 `CocoaPods ` for iOS
 * Install Flutter:
@@ -11,7 +11,7 @@
 * Install CocoaPods for OSX
 [https://guides.cocoapods.org/using/getting-started.html#toc_3](https://guides.cocoapods.org/using/getting-started.html#toc_3)
 
-## SDK Structure:
+### SDK Structure:
 
 ![](https://snag.gy/2cTYza.jpg)
 
@@ -20,7 +20,7 @@
 
 ## iOS Integration
 
-### <a name="fenced-code-block"> Project configuration </a>
+### <a name="fenced-code-block"> iOS Bank app configuration </a>
 
 ##### if current project is not using CocoaPods, install CocoaPods:
 * Open terminal, change to `somepath/iOSBankApp`
@@ -28,7 +28,7 @@
 
 ![https://snag.gy/f1eZWw.jpg](https://snag.gy/f1eZWw.jpg)
 
-##### 1.Add the following lines to `Podfile`:
+##### 1. Add the following lines to `Podfile`:
 	
 ~~~~ 
 flutter_application_path = '/somepath/ols-sdk/'
@@ -67,7 +67,7 @@ Finally, drag the new build phase to just after the `Target Dependencies` phase.
 
 Build the project using `⌘B`
 
-### Write code to use FlutterViewController from bank app
+### Write code to use FlutterViewController from Bank app's
 ##### 1. In `AppDelegate.h`: 
 * Declare app delegate to be a subclass of `FlutterAppDelegate`. 
 * `FlutterEngine` property, which help to register a plugin without a `FlutterViewController`.
@@ -117,7 +117,7 @@ Build the project using `⌘B`
 
 ![https://snag.gy/KJer06.jpg](https://snag.gy/KJer06.jpg)
 
-#### 5. Handle click event from button bank app
+#### 5. Handle click event from button Bank app's
 
 * Open bank app: `ViewController.m`
 
@@ -151,8 +151,68 @@ Build the project using `⌘B`
 @end
 ~~~~
 
-##### 6.Building and running bank app
+##### 6.Building and running Bank app's
 ### <a name="fenced-code-block"> Done iOS </a>
 
 
+##  Android Integration
 
+##### Open `terminal`
+* Change to folder: `/somepath/ols-sdk/.android`
+* Run command: `./gradlew flutter:assembleDebug`
+
+This results in a `flutter-debug.aar` archive file in `.android/Flutter/build/outputs/aar/.`
+### <a name="fenced-code-block"> Android Bank app configuration </a>
+
+Declares source compatibility within `app's build.gradle`:
+
+~~~~
+compileOptions {
+  sourceCompatibility 1.8
+  targetCompatibility 1.8
+}
+~~~~
+
+Include the ols-sdk as a sub-project in the Bank app's settings.gradle:
+
+~~~~
+include ':app'                                     // assumed existing content
+setBinding(new Binding([gradle: this]))                                 // new
+evaluate(new File(                                                      // new
+  settingsDir.parentFile,                                               // new
+  '/somepath/ols-sdk/.android/include_flutter.groovy'                          // new
+))                                                                      // new
+
+~~~~
+
+Add dependency to Bank app's `app/build.gradle`
+
+~~~~
+:
+dependencies {
+  implementation project(':flutter')
+  :
+}
+~~~~
+
+### <a name="fenced-code-block"> Use the loyalty module from android app code </a>
+
+Create a button and handle click event:
+
+~~~~
+import io.flutter.facade.Flutter;
+........
+
+ FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                View flutterView = Flutter.createView(MainActivity.this, getLifecycle(), null);
+                FrameLayout.LayoutParams frameLayout = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                addContentView(flutterView, frameLayout);
+            }
+        });
+~~~~
+
+##### Building and running Bank app
+### <a name="fenced-code-block"> Done Android </a>
