@@ -152,8 +152,7 @@ Build the project using `⌘B`
 ~~~~
 
 ##### 6.Building and running Bank app's
-### <a name="fenced-code-block"> Done iOS </a>
-
+###### ----- Done iOS Integration -----
 
 ##  Android Integration
 
@@ -214,5 +213,5 @@ import io.flutter.facade.Flutter;
         });
 ~~~~
 
-##### Building and running Bank app
-### <a name="fenced-code-block"> Done Android </a>
+##### Building and running Bank app's
+###### ----- Done Android Integration -----
