@@ -13,10 +13,11 @@
 
 ### SDK Structure:
 
-![](https://snag.gy/2cTYza.jpg)
+![](https://snag.gy/DcnG9N.jpg)
 
 * **.ios**: library for ios app, contains some Cocoapods and a helper Ruby script
-* **.android**: library for android app
+* **.android**: library for android app (use for solution 1)
+* ** android_lib**: Includes aar & android resource (use for solution 2)
 
 ## iOS Integration
 
@@ -156,12 +157,16 @@ Build the project using `⌘B`
 
 ##  Android Integration
 
+
+
 ##### Open `terminal`
 * Change to folder: `/somepath/ols-sdk/.android`
 * Run command: `./gradlew flutter:assembleDebug`
 
 This results in a `flutter-debug.aar` archive file in `.android/Flutter/build/outputs/aar/.`
 ### <a name="fenced-code-block"> Android Bank app's configuration </a>
+
+#### Solution 1: use .android folder, require dart source code
 
 Declares source compatibility within `app's build.gradle`:
 
@@ -172,7 +177,7 @@ compileOptions {
 }
 ~~~~
 
-Include the ols-sdk as a sub-project in the Bank app's settings.gradle:
+Includes the ols-sdk as a sub-project in the Bank app's settings.gradle:
 
 ~~~~
 include ':app'                                     // assumed existing content
@@ -193,6 +198,35 @@ dependencies {
   :
 }
 ~~~~
+
+#### Solution 2: use android library aar
+
+Create `libs` foder at `/somepath/AndroidBankApp/app` if not exist and copy all `aar` file from `android_lib ` folder:
+
+![https://snag.gy/0tmAfe.jpg
+](https://snag.gy/0tmAfe.jpg)
+
+Add this lines to `/somepath/AndroidBankApp/build.gradle`:
+
+~~~~
+ flatDir 
+ 	{
+     dirs 'libs'
+    }
+~~~~
+
+Declares aars file within `/somepath/AndroidBankApp/app/build.gradle`:
+
+~~~~
+implementation(name: 'flutter-debug', ext: 'aar')
+implementation(name: 'path_provider-debug', ext: 'aar')
+implementation(name: 'sqflite-debug', ext: 'aar')
+~~~~
+
+Copy `flutter_assets` from `android_lib` to Bank app's assets folder:
+* 
+![https://snag.gy/y2LSXu.jpg
+](https://snag.gy/y2LSXu.jpg)
 
 ### <a name="fenced-code-block"> Open Loyalty view from android Bank app's code </a>
 
